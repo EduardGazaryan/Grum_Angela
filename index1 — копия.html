@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+    <div class="container">
+        <form action="#" class="login-form" name="submit-to-google-sheet">
+
+            <input type="date" name="Date" id="Date" autocomplete="off" placeholder="Дата" required>
+            <input type="text" name="Name" id="Name" autocomplete="on" placeholder="Порода или кличка" required>
+            <input type="text" name="Work" id="Work" autocomplete="on" placeholder="Что делала?" required>
+            <input type="price" name="Price" id="Price" autocomplete="off" placeholder="Цена услуги" required>
+
+            
+            
+            <button type="submit">Записать</button>
+
+            <span id="sendText"></span>
+
+            
+        </form>
+        <div>
+            
+
+            <form action="./index.html" class="zarplata" target="_blank">
+                <button>Главная</button>                
+            </form>
+
+        </div>
+
+
+    </div>
+
+    
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxgvVNWqIXIUwkkqodow7m9tHhyeEayNSGSLGnD7oqmfh-Pg6CKbfYSJ42QkZtQLgUu/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const sendText = document.getElementById('sendText')
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    sendText.innerHTML = "Спасибо, твои данные отправлены успешно!"
+                    setTimeout(function () {
+                        sendText.innerHTML = ''
+                    }, 3000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>
